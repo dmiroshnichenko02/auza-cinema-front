@@ -1,6 +1,6 @@
 import styles from '@/components/layout/Layout.module.scss'
-import Navigation from '@/components/layout/navigation/Navigation'
-import Sidebar from '@/components/layout/sidebar/Sidebar'
+
+import ReactQueryProvider from '@/providers/ReactQueryProvider'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.scss'
@@ -20,9 +20,7 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={`${inter.className} ${styles.layout}`}>
-				<Navigation />
-				<div className={styles.center}>{children}</div>
-				<Sidebar />
+				<ReactQueryProvider>{children}</ReactQueryProvider>
 			</body>
 		</html>
 	)
