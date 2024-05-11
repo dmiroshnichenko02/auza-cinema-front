@@ -1,10 +1,8 @@
-import styles from '@/components/layout/Layout.module.scss'
-
+import '@/assets/styles/globals.scss'
 import { SITE_NAME } from '@/configs/seo.config'
-import ReactQueryProvider from '@/providers/ReactQueryProvider'
+import MainProvider from '@/providers/MainProvider'
 import type { Metadata } from 'next'
 import { Outfit } from 'next/font/google'
-import './globals.scss'
 
 const outfit = Outfit({ subsets: ['latin'] })
 
@@ -23,8 +21,8 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={`${outfit.className} ${styles.layout}`}>
-				<ReactQueryProvider>{children}</ReactQueryProvider>
+			<body className={`${outfit.className}`}>
+				<MainProvider>{children}</MainProvider>
 			</body>
 		</html>
 	)
