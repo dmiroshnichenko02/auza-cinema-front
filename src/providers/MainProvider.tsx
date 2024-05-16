@@ -13,8 +13,8 @@ const MainProvider: FC<PropsWithChildren> = ({ children }) => {
 		<HeadProvider>
 			<Provider store={store}>
 				<ReactQueryProvider>
-					<ReduxToastLib />
 					<Layout>{children}</Layout>
+					<ReduxToastLib />
 				</ReactQueryProvider>
 			</Provider>
 		</HeadProvider>
