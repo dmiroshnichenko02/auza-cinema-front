@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getUsersUrl } from './configs/api.config'
+import { logout } from './store/user/user.actions'
 
 export async function middleware(req: NextRequest, res: NextResponse) {
 	const { pathname } = req.nextUrl
@@ -21,6 +22,11 @@ export async function middleware(req: NextRequest, res: NextResponse) {
 		})
 	).json()
 
+	if (!refreshToken) {
+		logout()
+		return NextResponse.redirect(new URL('/auth', req.url))
+	}
+
 	if (refreshToken && isAuthPage) {
 		return NextResponse.redirect(new URL('/', req.url))
 	}
@@ -29,17 +35,13 @@ export async function middleware(req: NextRequest, res: NextResponse) {
 		return NextResponse.next()
 	}
 
-	if (!refreshToken) {
-		return NextResponse.redirect(new URL('/auth', req.url))
-	}
-
 	if (!user.isAdmin && isOwnerPage) {
 		return NextResponse.redirect(new URL('/404', req.url))
 	}
 
-	if (!refreshToken && isProfilePage) {
-		return NextResponse.redirect(new URL('/auth', req.url))
-	}
+	// if (!refreshToken && isProfilePage) {
+	// 	return NextResponse.redirect(new URL('/auth', req.url))
+	// }
 }
 
 export const config = {

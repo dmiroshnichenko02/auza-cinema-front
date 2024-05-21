@@ -9,5 +9,15 @@ export const UserService = {
 				Authorization: `Bearer ${accessToken}`
 			}
 		})
+	},
+
+	async getAll(searchTerms?: string) {
+		return axios.get<IUser[]>(getUsersUrl(''), {
+			params: searchTerms ? { searchTerms } : {}
+		})
+	},
+
+	async deleteUser(_id: string) {
+		return axios.delete(getUsersUrl(`/${_id}`))
 	}
 }

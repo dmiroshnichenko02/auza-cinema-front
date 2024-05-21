@@ -1,5 +1,6 @@
+import Admin from '@/components/screens/admin/home/Admin'
 import { NO_INDEX_PAGE } from '@/configs/seo.config'
-import { NextPageAuth } from '@/shared/types/auth.types'
+import { FC } from 'react'
 
 export const metadata = {
 	title: 'Manage',
@@ -7,10 +8,12 @@ export const metadata = {
 	...NO_INDEX_PAGE
 }
 
-const OwnerPage: NextPageAuth = () => {
-	return <div>page</div>
+const OwnerPage: FC = () => {
+	return (
+		<>
+			<Admin />
+		</>
+	)
 }
-
-OwnerPage.isOnlyAdmin = true
 
 export default OwnerPage
