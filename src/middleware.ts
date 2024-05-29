@@ -1,16 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getUsersUrl } from './configs/api.config'
-import { logout } from './store/user/user.actions'
+import { getStoreLocal } from './utils/localStorage'
+
+export const config = {
+	matcher: ['/owner/:path*', '/auth/:path*', '/profile/:path*']
+}
 
 export async function middleware(req: NextRequest, res: NextResponse) {
 	const { pathname } = req.nextUrl
 
 	const accessToken = req.cookies.get('accessToken')?.value
 	const refreshToken = req.cookies.get('refreshToken')?.value
+	const localStorage = await getStoreLocal('user')
 
 	const isOwnerPage = pathname.includes('/owner')
 	const isProfilePage = pathname.includes('/profile')
 	const isAuthPage = pathname.includes('/auth')
+	const isHomePage = pathname.includes('/')
 
 	const user = await (
 		await fetch(getUsersUrl('/profile'), {
@@ -22,28 +28,15 @@ export async function middleware(req: NextRequest, res: NextResponse) {
 		})
 	).json()
 
-	if (!refreshToken) {
-		logout()
+	if (!accessToken && !isAuthPage) {
 		return NextResponse.redirect(new URL('/auth', req.url))
 	}
 
-	if (refreshToken && isAuthPage) {
-		return NextResponse.redirect(new URL('/', req.url))
-	}
-
-	if (isAuthPage) {
+	if (isOwnerPage && user.isAdmin) {
 		return NextResponse.next()
 	}
 
-	if (!user.isAdmin && isOwnerPage) {
-		return NextResponse.redirect(new URL('/404', req.url))
+	if (isProfilePage && user) {
+		return NextResponse.next()
 	}
-
-	// if (!refreshToken && isProfilePage) {
-	// 	return NextResponse.redirect(new URL('/auth', req.url))
-	// }
-}
-
-export const config = {
-	matcher: ['/owner/:path*', '/auth/:path*', '/profile/:path*']
 }
