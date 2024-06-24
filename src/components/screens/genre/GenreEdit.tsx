@@ -16,7 +16,7 @@ import dynamic from 'next/dynamic'
 import formStyles from '../../ui/formElements/adminForm.module.scss'
 
 const DynamicTextEditor = dynamic(
-	() => import('@/components/ui/formElements/TextEditor'),
+	() => import('../../../components/ui/formElements/TextEditor'),
 	{ ssr: false }
 )
 

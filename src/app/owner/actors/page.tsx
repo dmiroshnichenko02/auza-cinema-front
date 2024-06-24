@@ -1,4 +1,4 @@
-import ActorList from '@/components/screens/admin/actors/ActorList'
+import ActorList from '@/components/screens/admin/actor/actors/ActorList'
 import { NO_INDEX_PAGE } from '@/configs/seo.config'
 import { FC } from 'react'
 
