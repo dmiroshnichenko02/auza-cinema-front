@@ -1,5 +1,6 @@
 import { FC } from 'react'
 
+import { getMovieUrl } from '@/configs/url.config'
 import GalleryItem from '../gallery/GalleryItem'
 import Description from '../heading/Description'
 import Heading from '../heading/Heading'
@@ -20,7 +21,11 @@ const CatalogMovies: FC<ICatalog> = ({ title, description, movies }) => {
 						key={movie._id}
 						item={{
 							name: movie.title,
-							posterPath: movie.poster
+							link: getMovieUrl(movie.slug),
+							posterPath: movie.bigPoster,
+							content: {
+								title: movie.title
+							}
 						}}
 						variant='horizontal'
 					/>
